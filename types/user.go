@@ -21,6 +21,25 @@ type CreateUserParams struct {
 	Password  string `bson:"password" json:"password"`
 }
 
+type UpdateUserParams struct {
+	FirstName string `bson:"firstName,omitempty" json:"firstName"`
+	LastName  string `bson:"lastName,omitempty" json:"lastName"`
+}
+
+func (p UpdateUserParams) Validate() map[string]string {
+	errors := map[string]string{}
+
+	if len(p.FirstName) < minFirstNameLen {
+		errors["firstName"] = fmt.Sprintf("firstName length should be at least %d characters", minFirstNameLen)
+	}
+
+	if len(p.LastName) < minLastNameLen {
+		errors["lastName"] = fmt.Sprintf("lastName length should be at least %d characters", minLastNameLen)
+	}
+
+	return errors
+}
+
 func (p CreateUserParams) Validate() map[string]string {
 	errors := map[string]string{}
 

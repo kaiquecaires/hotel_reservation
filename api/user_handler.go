@@ -65,5 +65,18 @@ func (h *UserHandler) HandleDeleteUser(c fiber.Ctx) error {
 }
 
 func (h *UserHandler) HandlePutUser(c fiber.Ctx) error {
+	var (
+		params types.UpdateUserParams
+		userID = c.Params("id")
+	)
+
+	if err := c.Bind().Body(&params); err != nil {
+		return err
+	}
+
+	if err := h.userStore.UpdateUserById(c.Context(), userID, params); err != nil {
+		return err
+	}
+
 	return nil
 }
