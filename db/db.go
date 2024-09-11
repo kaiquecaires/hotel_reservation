@@ -1,3 +1,7 @@
 package db
 
-const DBNAME = "hotel-reservation"
+import "context"
+
+type Dropper interface {
+	Drop(context.Context) error
+}
